@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+curl -O https://raw.githubusercontent.com/wiresock/amneziawg-install/main/amneziawg-install.sh 
+chmod +x amneziawg-install.sh
+sudo ./amneziawg-install.sh
