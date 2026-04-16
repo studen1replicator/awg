@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+apt install -y iptables-persistent
+
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p udp --dport 60123 -j ACCEPT
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+iptables -A FORWARD -i awg0 -j ACCEPT
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
+
+
+##########################
+PostUp = iptables -I INPUT -p udp --dport 54781 -j ACCEPT
+PostUp = iptables -I FORWARD -i eth0 -o awg0 -j ACCEPT
+PostUp = iptables -I FORWARD -i awg0 -j ACCEPT
+PostUp = iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+##########################
